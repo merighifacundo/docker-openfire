@@ -10,6 +10,7 @@ rewire_openfire() {
 
 initialize_data_dir() {
   echo "Initializing ${OPENFIRE_DATA_DIR}..."
+  cat ./test.txt
 
   mkdir -p ${OPENFIRE_DATA_DIR}
   chmod -R 0750 ${OPENFIRE_DATA_DIR}

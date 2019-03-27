@@ -7,13 +7,20 @@ ENV OPENFIRE_VERSION=3.10.3 \
     OPENFIRE_LOG_DIR=/var/log/openfire
 
 RUN apt-get update \
- && DEBIAN_FRONTEND=noninteractive apt-get install -y openjdk-7-jre \
+ && DEBIAN_FRONTEND=noninteractive apt-cache search openjdk \
+ && apt-get install -y software-properties-common \
+ && add-apt-repository -y ppa:openjdk-r/ppa \
+ && apt-get update -y  \
+ && apt-get install -y openjdk-8-jdk  \
+ && java -version \
  && wget "http://download.igniterealtime.org/openfire/openfire_${OPENFIRE_VERSION}_all.deb" -O /tmp/openfire_${OPENFIRE_VERSION}_all.deb \
  && dpkg -i /tmp/openfire_${OPENFIRE_VERSION}_all.deb \
  && mv /var/lib/openfire/plugins/admin /usr/share/openfire/plugin-admin \
  && rm -rf openfire_${OPENFIRE_VERSION}_all.deb \
  && rm -rf /var/lib/apt/lists/*
 
+COPY test.txt /test.txt
+COPY plugin.jar ${OPENFIRE_DATA_DIR}/plugins/plugin.jar
 COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh
 
