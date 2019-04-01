@@ -2,16 +2,15 @@
 set -e
 
 rewire_openfire() {
-  rm -rf /usr/share/openfire/{conf,resources/security,lib/log4j.xml}
+  rm -rf /usr/share/openfire/{conf,resources/security}
   ln -sf ${OPENFIRE_DATA_DIR}/conf /usr/share/openfire/
   ln -sf ${OPENFIRE_DATA_DIR}/conf/security /usr/share/openfire/resources/
-  ln -sf ${OPENFIRE_DATA_DIR}/conf/log4j.xml /usr/share/openfire/lib/
+  cp -f ${OPENFIRE_DATA_DIR}/log4j/log4j.xml /usr/share/openfire/lib/
 }
 
 initialize_data_dir() {
   echo "Initializing ${OPENFIRE_DATA_DIR}..."
-  cat ./test.txt
-
+  
   mkdir -p ${OPENFIRE_DATA_DIR}
   chmod -R 0750 ${OPENFIRE_DATA_DIR}
   chown -R ${OPENFIRE_USER}:${OPENFIRE_USER} ${OPENFIRE_DATA_DIR}

@@ -1,10 +1,10 @@
 FROM sameersbn/ubuntu:14.04.20170123
 MAINTAINER sameer@damagehead.com
 
-ENV OPENFIRE_VERSION=3.10.3 \
+ENV OPENFIRE_VERSION=4.3.2 \
     OPENFIRE_USER=openfire \
     OPENFIRE_DATA_DIR=/var/lib/openfire \
-    OPENFIRE_LOG_DIR=/var/log/openfire
+    OPENFIRE_LOG_DIR=/var/lib/openfire/logs
 
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-cache search openjdk \
@@ -19,8 +19,9 @@ RUN apt-get update \
  && rm -rf openfire_${OPENFIRE_VERSION}_all.deb \
  && rm -rf /var/lib/apt/lists/*
 
-COPY test.txt /test.txt
-COPY plugin.jar ${OPENFIRE_DATA_DIR}/plugins/plugin.jar
+COPY restAPI.jar ${OPENFIRE_DATA_DIR}/plugins/restAPI.jar
+#COPY rcclauth.jar ${OPENFIRE_DATA_DIR}/plugins/rcclauth.jar
+COPY log4j.xml ${OPENFIRE_DATA_DIR}/log4j/log4j.xml
 COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh
 
