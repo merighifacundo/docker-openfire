@@ -19,8 +19,7 @@ RUN apt-get update \
  && rm -rf openfire_${OPENFIRE_VERSION}_all.deb \
  && rm -rf /var/lib/apt/lists/*
 
-COPY restAPI.jar ${OPENFIRE_DATA_DIR}/plugins/restAPI.jar
-#COPY rcclauth.jar ${OPENFIRE_DATA_DIR}/plugins/rcclauth.jar
+COPY rccl-auth.jar ${OPENFIRE_DATA_DIR}/plugins/rcclauth.jar
 COPY log4j.xml ${OPENFIRE_DATA_DIR}/log4j/log4j.xml
 COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh
